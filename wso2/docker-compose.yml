@@ -16,7 +16,7 @@ oauth:
 oauthdb:
   image: mysql:5.7
   environment:
-    - MYSQL_ROOT_PASSWORD=upmce1234
+    - MYSQL_ROOT_PASSWORD=wso21234
     - MYSQL_DATABASE=regdb
     - MYSQL_USER=regadmin
     - MYSQL_PASSWORD=regadmin
