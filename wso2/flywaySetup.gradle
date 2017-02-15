@@ -1,0 +1,10 @@
+task flywayCI {
+    doLast {
+        flyway {
+            url = 'jdbc:mysql://127.0.0.1:3306/regdb'
+            locations = ['filesystem:seed']
+          }
+          tasks.flywayClean.execute()
+          tasks.flywayMigrate.execute()
+    }
+}

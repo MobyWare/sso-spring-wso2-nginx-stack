@@ -1,0 +1,25 @@
+version: '2'
+services:
+  api:
+    build: .
+    restart: always
+    environment:
+      API_JDBC_DATABASE_URL: jdbc:mysql://mysql1:3306/threepl?verifyServerCertificate=false&useSSL=false&requireSSL=false
+      API_DATABASE_USERNAME: root 
+      API_DATABASE_USER_PASSWORD: threepl
+      API_DATABASE_TYPE: mysql
+    ports:
+      - "8000:8000"
+      - "8088:80"
+      - "8080:8080"
+    depends_on:
+      - mysql1
+  mysql1:
+    image: mysql:latest
+#    volumes:
+#      - "./db:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: threepl
+      MYSQL_DATABASE: threepl
+    ports:
+      - "3306:3306"

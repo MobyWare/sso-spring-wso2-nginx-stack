@@ -1,0 +1,36 @@
+#------------------------------------------------------------------------------
+# Spring Configuration
+#------------------------------------------------------------------------------
+
+spring:
+    datasource:
+        url: ${API_JDBC_DATABASE_URL}
+        driverClassName: com.mysql.jdbc.Driver
+        username: ${API_DATABASE_USERNAME}
+        password: ${API_DATABASE_USER_PASSWORD}
+        test-while-idle: true
+        validation-query: SELECT 1
+    jpa:
+        database: ${API_DATABASE_TYPE}
+        show-sql: true
+        generate-ddl: false
+    profiles:
+        active: oauth
+
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-value:
+            -----BEGIN PUBLIC KEY-----
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0qQqVuWFH26fE1tE68Ak
+            Hnx0Q49WMO3SXhk7o0IBW3I/MdMqMYwRYYkTiAm22XeSpxlyh2PG19e/dxREc1VC
+            UkCThMDnkHeYx06l3TFGYJ10KV9cVorrWlDt3k0lY0+Lv14A7c10Vyq2b047ep9X
+            DYWQ7mNoBAXroCDg9gzn+FONsXluQ1weIfXUHehqxgRffdMWIo+6wfdNXMhcBQhR
+            V2lf6lncFqDH8mhFtdaFxSyFk/NXTuvPf3GYU2dggZpKdS6PFpbhL9nbWLEMA4l5
+            sxN29i2UraF7Up5dVVG7MV6RYbBXiYGh6AzMOKMeJPU4DsxBne6CUrLof0cTXfmk
+            LwIDAQAB
+            -----END PUBLIC KEY-----
+  basic:
+    enabled: false
+  ignored: /

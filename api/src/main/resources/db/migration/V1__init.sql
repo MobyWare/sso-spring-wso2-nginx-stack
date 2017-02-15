@@ -1,0 +1,8 @@
+CREATE TABLE sample (
+  sample_id INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(45) DEFAULT NULL,
+  start_date DATE DEFAULT NULL,
+  end_date DATE DEFAULT NULL,
+ description VARCHAR(200) DEFAULT NULL,
+  PRIMARY KEY (sample_id)
+);

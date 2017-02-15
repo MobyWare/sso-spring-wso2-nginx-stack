@@ -1,0 +1,24 @@
+oauth:
+  image: upmcenterprises/wso2-is:5.3.1
+  restart: always
+  ports:
+    - "9445:9443"
+  environment:
+    - USER=regadmin
+    - PASSWORD=regadmin
+    - PUBLICURL=localhost
+    - SERVER=oauthdb
+  links:
+    - "oauthdb"
+  volumes:
+    - ./certs:/opt/wso2/repository/resources/security
+    - ./migrations:/opt/flyway/sql
+oauthdb:
+  image: mysql:5.7
+  environment:
+    - MYSQL_ROOT_PASSWORD=upmce1234
+    - MYSQL_DATABASE=regdb
+    - MYSQL_USER=regadmin
+    - MYSQL_PASSWORD=regadmin
+  ports:
+    - "3306:3306"
