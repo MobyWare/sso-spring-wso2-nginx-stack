@@ -1,0 +1,129 @@
+# 3PL - Secret definition
+apiVersion: v1
+data:
+  mysql.root.password: dGhyZWVwbA==
+kind: Secret
+metadata:
+  name: wso2-creds
+type: Opaque
+
+---
+
+# Pod definition of JavaScript Client app in Nginx and a Service for discovery
+
+#Note Service is a LoadBalancer type, so we can access easily from outside the cluster.
+apiVersion: v1
+kind: Service
+metadata:
+  name: web1
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 8080
+  selector:
+    app: web
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dev.web.wso2.upmce
+  annotations:
+    emmie-update: dev.web.wso2.upmce
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - name: web
+        imagePullPolicy: Always
+        image: TBD:TBD
+        ports:
+          - name: html
+            containerPort: 8080		
+
+---
+
+# SpringBoot API Pod and a Service for discovery
+apiVersion: v1
+kind: Service
+metadata:
+  name: api1
+spec:
+  ports:
+    - name: http
+      port: 8080
+  selector:
+    app: api
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dev.api.wso2.upmce
+  annotations:
+    emmie-update: dev.api.wso2.upmce
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        imagePullPolicy: Always
+        image: TBD
+        ports:
+          - name: http
+            containerPort: 8080		
+---
+
+# MySQL Pod and a Service for discovery
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql1
+spec:
+  ports:
+    - name: mysql
+      port: 3306
+  selector:
+    app: appdb
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dev.appdb.wso2.upmce
+  annotations:
+    emmie-update: dev.appdb.wso2.upmce
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: appdb
+    spec:
+      containers:
+      - name: appdb
+        imagePullPolicy: Always
+        image: mysql:latest
+        ports:
+          - name: mysql
+            containerPort: 3306
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: wso2-creds
+                key: mysql.root.password
+          - name: MYSQL_DATABASE
+            value: wso2			
