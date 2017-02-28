@@ -64,3 +64,43 @@ Migrations Path in Container: /opt/flyway/sql/
 Use the command below to move the migrations from git to K8S in AWS. We then reference the config map name, `wso2-migrations`, in the deployment file.
 
 > kubectl create configmap wso2-migrations --from-file=./migrations
+
+
+# Testing Notes
+
+## Verifying End-points in k8s
+We'll use the kubectl port-forward command. Some versions of k8s clusters do not support it.
+
+1) Map your host port to the port of the web front-end pod).
+
+> kubectl port-forward `host-port`:8080 `web-pod-name`
+
+2) Open your browser and navigate to http://localhost:`host-port`.
+
+_Note, you can get the name of the web front-end pod using the command below, which will list all the pods:_
+
+> kubectl get po
+
+## Certs
+
+Certs are required to handle encryption in the container (e.g. TLS connections).  
+
+### Generate Certs
+
+In general we use the following commands:
+
+> $ keytool -genkey -alias `descriptive-alias` -keyalg RSA -keysize 2048 -keystore `key-store-output-filename` -dname "CN=`hostname`,OU=`<department-name`,O=`organization-name`,L=`city`,S=`state`,C=`country`" -storepass `password` -keypass `password`
+
+We need to update the SSL cert (and optionally the trust store):
+* __*SSL*__ - used for SSL and to encrypt passwords
+
+> keytool -genkey -alias `wso2-vincent` -keyalg RSA -keysize 2048 -keystore wso2.jks -dname "CN=localhost,OU=3PL,O=UPMC Enterprises,L=Pittsburgh,S=PA,C=US" -storepass changeit -keypass changeit
+
+_NB: The image looks for a key-store named `wso2.jks`with the alias `wso2-vincent`._
+
+#### Kubernetes - Move certificates to cluster
+We run the command below to move the new file `wso2.jks` to the cluster in a secret, we name `wso2-certs`. We refere it in the deployment file. 
+
+> kubectl create secret generic wso2-certs --from-file=./certs/wso2.jks --from-file=./certs/wso2carbon.jks
+
+_NB: We add wso2carbon.jks. In 5.3.1 of the image it seems to be needed. This may bet fixed in future versions of image._
