@@ -106,6 +106,10 @@ We run the command below to move the new file `wso2.jks` to the cluster in a sec
 _NB: We add wso2carbon.jks. In 5.3.1 of the image it seems to be needed. This may bet fixed in future versions of image._
 
 ## Configuring Cloud SQL in Google Cloud Platform (GCP)
+
+__*Prerequisite*__
+You most enable the *CloudSQL API* for the project that has your cloud cluster.
+
 I am experimenting with GCP. In GCP, we allow our cluster to access a Cloud SQL instance using a proxy. This proxy has an image that is added to the pod of the application that needs to use database. The proxy requires two secrets. You can use the steps below to create them:
 1. Add a user, `proxy-user` for the proxy to use to the database.
 2. Configure a service account, key for the service account (i.e. `svc-acct-key`) and download that key to local path (i.e. `svc-acct-key-path`)

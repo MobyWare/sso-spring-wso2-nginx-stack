@@ -46,15 +46,9 @@ spec:
             memory: 1024Mi
         env:
           - name: USER
-            valueFrom:
-              secretKeyRef:
-                name: wso2-creds
-                key: dev.oauthdb.dbusername
+            value: wso2is
           - name: PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: wso2-creds
-                key: dev.oauthdb.dbuserpassword
+            value: wso2is
           - name: SERVER
             valueFrom:
               configMapKeyRef:

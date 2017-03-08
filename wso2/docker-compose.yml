@@ -1,5 +1,5 @@
 oauth:
-  image: sso/wso2/oauth_migrations:1.0 #upmcenterprises/wso2-is:5.3.1
+  image: upmcenterprises/wso2-is:5.3.1
   restart: always
   ports:
     - "9445:9443"
