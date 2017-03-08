@@ -1,0 +1,72 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dev.oauth.wso2.sso
+  annotations:
+    emmie-update: dev.oauth.wso2.sso
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: oauth
+    spec:
+      volumes:
+        - name: logs
+          emptyDir: {}
+        - name: wso2-migrations
+          configMap:
+            name: wso2-migrations
+        - name: wso2-certs
+          secret:
+            secretName: wso2-certs          
+        - name: certs
+          secret:
+            secretName: es-certificates     
+      containers:
+      - name: wso2
+        image: upmcenterprises/wso2-is:5.3.1
+        imagePullPolicy: Always
+        ports:
+          - name: oauth
+            containerPort: 9443
+        volumeMounts:
+        - mountPath: /opt/wso2/repository/logs
+          name: logs
+        - name: wso2-migrations
+          mountPath: /opt/tmp/
+        - name: wso2-certs
+          mountPath: /opt/wso2/repository/resources/security
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
+          requests:
+            cpu: 500m
+            memory: 1024Mi
+        env:
+          - name: USER
+            valueFrom:
+              secretKeyRef:
+                name: wso2-creds
+                key: dev.oauthdb.dbusername
+          - name: PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: wso2-creds
+                key: dev.oauthdb.dbuserpassword
+          - name: SERVER
+            valueFrom:
+              configMapKeyRef:
+                name: wso2-config
+                key: dev.oauthdb.servername          
+          - name: DATABASENAME
+            valueFrom:
+              configMapKeyRef:
+                name: wso2-config
+                key: dev.oauthdb.databasename    
+          - name: PUBLICURL
+            valueFrom:
+              configMapKeyRef:
+                name: wso2-config
+                key: dev.oauth.publicurl                                            

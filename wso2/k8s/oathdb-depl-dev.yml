@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dev.oauthdb.wso2.mobyware
+  annotations:
+    emmie-update: dev.oauthdb.wso2.mobyware
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: oauthdb
+    spec:
+      containers:
+      - name: oauthdb
+        imagePullPolicy: Always
+        image: mysql:5.7
+        ports:
+          - name: mysql
+            containerPort: 3306
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: wso2-creds
+                key: mysql.root.password
+          - name: MYSQL_DATABASE
+            value: wso2

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: oauthdb
+spec:
+  ports:
+    - name: mysql
+      port: 3306
+  selector:
+    app: oauthdb

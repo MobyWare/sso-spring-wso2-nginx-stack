@@ -1,0 +1,8 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: wso2-config
+data:
+  dev.oauthdb.servername: oauthdb
+  dev.oauthdb.databasename: regdb
+  dev.oauth.publicurl: localhost

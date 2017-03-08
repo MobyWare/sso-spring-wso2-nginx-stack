@@ -1,5 +1,5 @@
 oauth:
-  image: upmcenterprises/wso2-is:5.3.1
+  image: sso/wso2/oauth_migrations:1.0 #upmcenterprises/wso2-is:5.3.1
   restart: always
   ports:
     - "9445:9443"
@@ -12,7 +12,7 @@ oauth:
     - "oauthdb"
   volumes:
     - ./certs:/opt/wso2/repository/resources/security
-    - ./migrations:/opt/flyway/sql
+#    - ./migrations:/opt/flyway/sql
 oauthdb:
   image: mysql:5.7
   environment:
