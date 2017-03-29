@@ -1,15 +1,15 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: dev.oauth.wso2.sso
+  name: dev.oauth.wso2.secondary.sso
   annotations:
-    emmie-update: dev.oauth.wso2.sso
+    emmie-update: dev.oauth.wso2..secondary.sso
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: oauth
+        app: oauth-secondary
     spec:
       volumes:
         - name: logs
@@ -55,10 +55,7 @@ spec:
                 name: wso2-config
                 key: dev.oauthdb.servername          
           - name: DATABASENAME
-            valueFrom:
-              configMapKeyRef:
-                name: wso2-config
-                key: dev.oauthdb.databasename    
+            value: regdb_secondary   
           - name: PUBLICURL
             valueFrom:
               configMapKeyRef:

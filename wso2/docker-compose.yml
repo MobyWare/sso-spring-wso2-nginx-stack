@@ -1,5 +1,5 @@
 oauth:
-  image: upmcenterprises/wso2-is:5.3.1
+  image: dickm/issue10/fix:1.0
   restart: always
   ports:
     - "9445:9443"
@@ -8,16 +8,17 @@ oauth:
     - PASSWORD=regadmin
     - PUBLICURL=localhost
     - SERVER=oauthdb
+    - DATABASENAME=regdbTwo
   links:
     - "oauthdb"
   volumes:
     - ./certs:/opt/wso2/repository/resources/security
-#    - ./migrations:/opt/flyway/sql
+    - ./migrations:/opt/flyway/sql
 oauthdb:
   image: mysql:5.7
   environment:
     - MYSQL_ROOT_PASSWORD=wso21234
-    - MYSQL_DATABASE=regdb
+    - MYSQL_DATABASE=regdbTwo
     - MYSQL_USER=regadmin
     - MYSQL_PASSWORD=regadmin
   ports:

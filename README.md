@@ -99,9 +99,11 @@ We need to update the SSL cert (and optionally the trust store):
 _NB: The image looks for a key-store named `wso2.jks`with the alias `wso2-vincent`._
 
 #### Kubernetes - Move certificates to cluster
-We run the command below to move the new file `wso2.jks` to the cluster in a secret, we name `wso2-certs`. We refere it in the deployment file. 
+We run the command below to move the new file `wso2.jks` to the cluster in a secret, we name `wso2-certs`. We refer to it in the deployment file. 
 
-> kubectl create secret generic wso2-certs --from-file=./certs/wso2.jks --from-file=./certs/wso2carbon.jks
+_NB we actually need the client cert_
+
+> kubectl create secret generic wso2-certs --from-file=./certs/wso2.jks --from-file=./certs/wso2carbon.jks --from-file=./certs/client-truststore.jks
 
 _NB: We add wso2carbon.jks. In 5.3.1 of the image it seems to be needed. This may bet fixed in future versions of image._
 
@@ -119,3 +121,11 @@ I am experimenting with GCP. In GCP, we allow our cluster to access a Cloud SQL 
 > kubectl create secret generic cloudsql-oauth-credentials --from-file=credentials.json=`svc-acct-key-path`
 
 You can look at the deployment to see how these two secrets are used. You can also find out more about this configuration from [Cloud SQL - Connecting from Google Container Engine](https://cloud.google.com/sql/docs/mysql/connect-container-engine)
+
+## Configuring Persistent storage
+
+We are using this for the secondary wso2 because we could not change the database config name. The parameter names:
+* `disk-name` was _mysql-disk_
+* `disk-zone` was _us-east1-b_
+
+> gcloud compute disks create --size=`disk-size` --zone=`disk-zone` `disk-name` 
