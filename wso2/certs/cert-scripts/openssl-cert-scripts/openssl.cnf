@@ -1,0 +1,60 @@
+[ ca ]
+default_ca = CA_default
+
+[ CA_default ]
+x509_extensions  = usr_cert # The extentions to add to the cert
+default_days     = 1095     # how long to certify for
+default_crl_days = 30       # how long before next CRL
+default_md       = sha256   # use public key default MD
+preserve         = no       # keep passed DN ordering
+
+[ usr_cert ]
+basicConstraints = CA:FALSE
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+default_md       = sha256   # use public key default MD
+
+[ req ]
+req_extensions = v3_req
+distinguished_name = req_distinguished_name
+x509_extensions = v3_ca # The extentions to add to the self signed cert
+
+[ v3_ca ]
+# Extensions for a typical CA
+basicConstraints = CA:TRUE
+# PKIX recommendation.
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid:always,issuer:always
+
+[ req_distinguished_name ]
+countryName                     = Country Name (2 letter code)
+countryName_default             = US
+countryName_min                 = 2
+countryName_max                 = 2
+stateOrProvinceName             = State or Province Name (full name)
+stateOrProvinceName_default     = Pennsylvania
+localityName                    = Locality Name (eg, city)
+localityName_default            = Pittsburgh
+0.organizationName              = Organization Name (eg, company)
+0.organizationName_default      = UPMC
+organizationalUnitName          = Organizational Unit Name (eg, section)
+organizationalUnitName_default  = Enterprises
+commonName                      = Common Name (e.g. server FQDN or YOUR name)
+commonName_max                  = 64
+emailAddress                    = Email Address
+emailAddress_max                = 64
+
+[ v3_req ]
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+extendedKeyUsage = serverAuth, clientAuth
+subjectAltName = @alt_names
+
+[ alt_names ]
+IP.1 = 127.0.0.1
+DNS.1 = 127.0.0.1
+DNS.2 = *.isd.upmc.edu
+DNS.3 = *.*.cluster.internal
+DNS.4 = *.ec2.internal
+DNS.5 = *.compute.internal
+DNS.6 = *.us-east-1.compute.internal

@@ -107,6 +107,21 @@ _NB we actually need the client cert_
 
 _NB: We add wso2carbon.jks. In 5.3.1 of the image it seems to be needed. This may bet fixed in future versions of image._
 
+#### Sharing Keys
+We share keys between WSO2 instances. This makes it easy to share encrytped data between instances for a demo. It's possible to use the same keys, but attributed different CN and SANs. This makes it easy to differentiate the instances while keeping cryptography consisted. There are scripts that show how in the __*certs*__ folder. 
+
+__*Issues*__
+* We get keys from JKS (which we create with keytool command above). Need to remove the attendent password as a result. Command below will do that.
+
+> openssl rsa -in `key-file-with-password` -out `same-key-file-without`
+
+* Need to set values appropriately to use image without modification of `start.sh`. As of version 5.3.0.4 of the upmce image the following encryption values are `wso2carbon`:
+    * Keystore alias
+    * Keystore file name __*.jks*__
+    * Keystoer password
+    * Private key password
+* We need to import the cert from the IDP WSO2 instance to the SP WSO2 intance. We use __*../certs/wso2-new.pem*__ for that. Generated from original with new SAN and CN added. See scripts.
+
 ## Configuring Cloud SQL in Google Cloud Platform (GCP)
 
 __*Prerequisite*__
