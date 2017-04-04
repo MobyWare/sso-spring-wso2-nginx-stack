@@ -31,7 +31,7 @@ spec:
         imagePullPolicy: Always
         ports:
           - name: oauth
-            containerPort: 9443
+            containerPort: 9445
         volumeMounts:
         - mountPath: /opt/wso2/repository/logs
           name: logs
@@ -47,6 +47,8 @@ spec:
         env:
           - name: USER
             value: wso2is
+          - name: HTTPSPORT
+            value: "9445"
           - name: PASSWORD
             value: wso2is
           - name: SERVER
