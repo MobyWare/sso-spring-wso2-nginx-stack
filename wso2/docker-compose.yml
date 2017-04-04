@@ -1,24 +1,26 @@
 oauth:
-  image: dickm/issue10/fix:1.0
+  image: upmcenterprises/wso2-is:5.3.0.4
   restart: always
   ports:
-    - "9445:9443"
+    - "9446:9446"
   environment:
     - USER=regadmin
     - PASSWORD=regadmin
     - PUBLICURL=localhost
     - SERVER=oauthdb
-    - DATABASENAME=regdbTwo
+    - DATABASENAME=regdb
+    - HTTPSPORT=9446
   links:
     - "oauthdb"
   volumes:
-    - ./certs:/opt/wso2/repository/resources/security
-    - ./migrations:/opt/flyway/sql
+    - ./certs/wso2carbon-control.jks:/opt/wso2/repository/resources/security/wso2carbon.jks
+    - ./certs/client-truststore.jks:/opt/wso2/repository/resources/security/client-truststore.jks
+    - ./migrations:/opt/tmp
 oauthdb:
   image: mysql:5.7
   environment:
     - MYSQL_ROOT_PASSWORD=wso21234
-    - MYSQL_DATABASE=regdbTwo
+    - MYSQL_DATABASE=regdb
     - MYSQL_USER=regadmin
     - MYSQL_PASSWORD=regadmin
   ports:
