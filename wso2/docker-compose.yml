@@ -10,6 +10,7 @@ oauth:
     - SERVER=oauthdb
     - DATABASENAME=regdb
     - HTTPSPORT=9446
+    - PORT=3307    
   links:
     - "oauthdb"
   volumes:
@@ -23,5 +24,7 @@ oauthdb:
     - MYSQL_DATABASE=regdb
     - MYSQL_USER=regadmin
     - MYSQL_PASSWORD=regadmin
+  volumes:
+    - ./db/first:/var/lib/mysql    
   ports:
-    - "3306:3306"
+    - "3307:3306"
