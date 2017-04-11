@@ -1,23 +1,22 @@
-oauth:
+oauth-primary:
   image: upmcenterprises/wso2-is:5.3.0.4
-  restart: always
   ports:
     - "9446:9446"
   environment:
     - USER=regadmin
     - PASSWORD=regadmin
     - PUBLICURL=localhost
-    - SERVER=oauthdb
+    - SERVER=oauthdb-primary
     - DATABASENAME=regdb
     - HTTPSPORT=9446
     - PORT=3307    
   links:
-    - "oauthdb"
+    - "oauthdb-primary"
   volumes:
-    - ./certs/wso2carbon-control.jks:/opt/wso2/repository/resources/security/wso2carbon.jks
+    - ./certs/wso2-new.jks:/opt/wso2/repository/resources/security/wso2carbon.jks
     - ./certs/client-truststore.jks:/opt/wso2/repository/resources/security/client-truststore.jks
     - ./migrations:/opt/tmp
-oauthdb:
+oauthdb-primary:
   image: mysql:5.7
   environment:
     - MYSQL_ROOT_PASSWORD=wso21234
