@@ -1,0 +1,25 @@
+{
+  "name": "nodeAuth",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app/app"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "cookie-parser": "^1.4.1",
+    "csurf": "^1.8.3",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "express-ejs-layouts": "^2.0.0",
+    "express-session": "^1.13.0",
+    "method-override": "^2.3.5",
+    "morgan": "^1.6.1",
+    "nconf": "^0.8.2",
+    "passport": "^0.3.2",
+    "passport-oauth2": "^1.1.2",
+    "passport-openidconnect": "0.0.1",
+    "static-favicon": "~1.0.0",
+    "winston": "^2.1.1"
+  }
+}

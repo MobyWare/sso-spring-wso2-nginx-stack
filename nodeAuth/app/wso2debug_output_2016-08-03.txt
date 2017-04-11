@@ -1,0 +1,53 @@
+From node app after linking google and local
+
+TOKEN
+AT: 319fb655eef423e9c2213eb653a3f374
+RT: 8383ef1210897dce45194afe9d3508df
+{ access_token: '319fb655eef423e9c2213eb653a3f374',
+  scope: 'openid',
+  id_token: 'eyJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiSkt0dGJabjlVel90U1Nma3VKamhjZyIsInN1YiI6IjEwNzQ3NjA2NDEzMjUyMzA1NjY0NUBjYXJib24uc3VwZXIiLCJhdWQiOlsiN3lYaHRwem9iVGhqVjFrZD
+c4cXF3NVVqcGxZYSJdLCJhenAiOiI3eVhodHB6b2JUaGpWMWtkNzhxcXc1VWpwbFlhIiwiYXV0aF90aW1lIjoxNDcwMjM2MDQyLCJpc3MiOiJodHRwczpcL1wvbG9jYWxob3N0Ojk0NDNcL29hdXRoMlwvdG9rZW4iLCJleHAiOj
+E0NzAyNDAsImlhdCI6MTQ3MDIzNn0.NGGI-JovclObYtj4-o9ovss-fFLpQf9Vz0pDMYutNifo-lp8y94glE_Eq1LRMiRiNbnWsunQS5VdOhpdiXW8crba-P-DLvKlXw7UKayPvFrASu1d53wDvMQnv3flLYpMnJv8E5mB6eGPZ-
+hFd2JXtCKfT-mA8g_96H8brrQaFuM',
+  token_type: 'Bearer',
+  expires_in: 2671 }
+----
+{ at_hash: 'JKttbZn9Uz_tSSfkuJjhcg',
+  sub: '107476064132523056645@carbon.super',
+  aud: [ '7yXhtpzobThjV1kd78qqw5UjplYa' ],
+  azp: '7yXhtpzobThjV1kd78qqw5UjplYa',
+  auth_time: 1470236042,
+  iss: 'https://localhost:9443/oauth2/token',
+  exp: 1470240,
+  iat: 1470236 }
+LOAD: true
+fetch profile: https://localhost:9443/oauth2/userinfo?schema=openid
+PROFILE
+{"sub":"107476064132523056645","name":"107476064132523056645","preferred_username":"107476064132523056645","given_name":"107476064132523056645","family_name":"1074760641325
+23056645"}
+-------
+TOKEN
+AT: 319fb655eef423e9c2213eb653a3f374
+RT: 8383ef1210897dce45194afe9d3508df
+{ access_token: '319fb655eef423e9c2213eb653a3f374',
+  scope: 'openid',
+  id_token: 'eyJhbGciOiJSUzI1NiJ9.eyJhdF9oYXNoIjoiSkt0dGJabjlVel90U1Nma3VKamhjZyIsInN1YiI6IjEwNzQ3NjA2NDEzMjUyMzA1NjY0NUBjYXJib24uc3VwZXIiLCJhdWQiOlsiN3lYaHRwem9iVGhqVjFrZD
+c4cXF3NVVqcGxZYSJdLCJhenAiOiI3eVhodHB6b2JUaGpWMWtkNzhxcXc1VWpwbFlhIiwiYXV0aF90aW1lIjoxNDcwMjM2MDQyLCJpc3MiOiJodHRwczpcL1wvbG9jYWxob3N0Ojk0NDNcL29hdXRoMlwvdG9rZW4iLCJleHAiOj
+E0NzAyNDAsImlhdCI6MTQ3MDIzN30.LuL04BWpqqFdyckmpkFdvFqgKYRpB9H66xSXM-AHW8Eqxn16571yBD9bQBNrMEy96jz99bDmUPAbawAoE1K9EdrHRQvanA9MmgfUboBPaAUOpAZec6892W8VpUaaq1jh_3X979tt-iiagB
+OFuKw2t2Ye1EDmYtawk0mVaqZM13w',
+  token_type: 'Bearer',
+  expires_in: 2320 }
+----
+{ at_hash: 'JKttbZn9Uz_tSSfkuJjhcg',
+  sub: '107476064132523056645@carbon.super',
+  aud: [ '7yXhtpzobThjV1kd78qqw5UjplYa' ],
+  azp: '7yXhtpzobThjV1kd78qqw5UjplYa',
+  auth_time: 1470236042,
+  iss: 'https://localhost:9443/oauth2/token',
+  exp: 1470240,
+  iat: 1470237 }
+LOAD: true
+fetch profile: https://localhost:9443/oauth2/userinfo?schema=openid
+PROFILE
+{"sub":"107476064132523056645","name":"107476064132523056645","phone_number":"5555555555","preferred_username":"107476064132523056645","given_name":"107476064132523056645",
+"family_name":"107476064132523056645","email":"test@upmc.edu"}
