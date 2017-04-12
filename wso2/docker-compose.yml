@@ -6,14 +6,14 @@ oauth-primary:
     - USER=regadmin
     - PASSWORD=regadmin
     - PUBLICURL=localhost
-    - SERVER=oauthdb-primary
+    - SERVER=oauthdb
     - DATABASENAME=regdb
     - HTTPSPORT=9443    
   links:
     - "oauthdb"
   volumes:
     - ./migrations:/opt/tmp
-oauthdb-primary:
+oauthdb:
   image: mysql:5.7
   environment:
     - MYSQL_ROOT_PASSWORD=wso21234
