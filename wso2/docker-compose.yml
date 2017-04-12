@@ -5,6 +5,7 @@ oauth:
   environment:
     - USER=regadmin
     - PASSWORD=regadmin 
+    - SERVER=oauthdb
   links:
     - "oauthdb"
 oauthdb:
