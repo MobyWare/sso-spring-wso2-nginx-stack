@@ -89,7 +89,10 @@ Certs are required to handle encryption in the container (e.g. TLS connections).
 
 In general we use the following commands:
 
-> $ keytool -genkey -alias `descriptive-alias` -keyalg RSA -keysize 2048 -keystore `key-store-output-filename` -dname "CN=`hostname`,OU=`<department-name`,O=`organization-name`,L=`city`,S=`state`,C=`country`" -storepass `password` -keypass `password`
+> $ keytool -genkey -alias `descriptive-alias` -keyalg RSA -keysize 2048 -keystore `key-store-output-filename` -dname "CN=`hostname`,OU=`department-name`,O=`organization-name`,L=`city`,S=`state`,C=`country`" -storepass `password` -keypass `password`
+
+__*Example*__
+keytool -genkey -alias wso2carbon -keyalg RSA -keysize 2048 -keystore wso2carbon-control.jks -dname "CN=localhost,OU=Control,O=UPMCE,L=Pittsburgh,S=PA,C=US" -storepass wso2carbon -keypass wso2carbon -validity 3650
 
 We need to update the SSL cert (and optionally the trust store):
 * __*SSL*__ - used for SSL and to encrypt passwords
@@ -103,7 +106,7 @@ We run the command below to move the new file `wso2.jks` to the cluster in a sec
 
 _NB we actually need the client cert_
 
-> kubectl create secret generic wso2-certs --from-file=./certs/wso2.jks --from-file=./certs/wso2carbon.jks --from-file=./certs/client-truststore.jks
+> kubectl create secret generic wso2-certs --from-file=./certs/wso2carbon.jks --from-file=./certs/client-truststore.jks
 
 _NB: We add wso2carbon.jks. In 5.3.1 of the image it seems to be needed. This may bet fixed in future versions of image._
 
