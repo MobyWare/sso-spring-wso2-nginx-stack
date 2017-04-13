@@ -1,2 +1,11 @@
-<p>ID: <%= user.id %></p>
-<p>Name: <%= user.displayName %></p>
+<p><strong>Username:</strong>
+    <%= user.id %>
+</p>
+<p><strong>Roles(s):</strong>
+    <%= user._json.scope %>
+</p>
+
+<br>
+<p><strong>Full Response:</strong>
+    <%= JSON.stringify(user) %>
+</p>
