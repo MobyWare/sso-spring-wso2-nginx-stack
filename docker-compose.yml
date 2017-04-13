@@ -1,11 +1,24 @@
-node-client:
-  build: ./nodeAuth/
+oauth:
+  image: upmcenterprises/wso2-is:5.3.0.4
   ports:
-    - "${WSO2_NODE_CLIENT_PORT}:${WSO2_NODE_CLIENT_PORT}"
-  env_file:
-    - .env
+    - "9446:9446"
   environment:
-    - WSO2_IDP_PORT={WSO2_IDP_PORT}
-    - WSO2_NODE_CLIENT_PORT=${WSO2_NODE_CLIENT_PORT}
-    - WSO2_CLIENT_ID_FED=${WSO2_CLIENT_ID_FED}
-    - WSO2_CLIENT_SECRET_FED=${WSO2_CLIENT_SECRET_FED}
+    - USER=regadmin
+    - PASSWORD=regadmin
+    - PUBLICURL=localhost
+    - SERVER=oauthdb
+    - DATABASENAME=regdb
+    - HTTPSPORT=9446    
+  links:
+    - "oauthdb"
+  volumes:
+    - ./wso2/migrations:/opt/tmp
+oauthdb:
+  image: mysql:5.7
+  environment:
+    - MYSQL_ROOT_PASSWORD=wso21234
+    - MYSQL_DATABASE=regdb
+    - MYSQL_USER=regadmin
+    - MYSQL_PASSWORD=regadmin   
+  ports:
+    - "3306:3306"

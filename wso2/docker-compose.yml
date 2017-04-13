@@ -1,4 +1,4 @@
-oauth-primary:
+oauth:
   image: upmcenterprises/wso2-is:5.3.0.4
   ports:
     - "9443:9443"
