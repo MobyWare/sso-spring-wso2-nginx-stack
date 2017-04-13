@@ -1,4 +1,4 @@
-FROM node:7
+FROM node:4.6
 
 RUN mkdir -p /usr/nodeAuth
 WORKDIR /usr/nodeAuth

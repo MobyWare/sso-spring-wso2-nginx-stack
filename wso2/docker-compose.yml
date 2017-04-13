@@ -13,8 +13,6 @@ oauth-primary:
   links:
     - "oauthdb-primary"
   volumes:
-    - ./certs/wso2-new.jks:/opt/wso2/repository/resources/security/wso2carbon.jks
-    - ./certs/client-truststore.jks:/opt/wso2/repository/resources/security/client-truststore.jks
     - ./migrations:/opt/tmp
 oauthdb-primary:
   image: mysql:5.7

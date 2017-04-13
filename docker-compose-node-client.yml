@@ -1,0 +1,11 @@
+node-client:
+  build: ./nodeAuth/
+  ports:
+    - "${WSO2_NODE_CLIENT_PORT}:${WSO2_NODE_CLIENT_PORT}"
+  env_file:
+    - .env
+  environment:
+    - WSO2_IDP_PORT={WSO2_IDP_PORT}
+    - WSO2_NODE_CLIENT_PORT=${WSO2_NODE_CLIENT_PORT}
+    - WSO2_CLIENT_ID_FED=${WSO2_CLIENT_ID_FED}
+    - WSO2_CLIENT_SECRET_FED=${WSO2_CLIENT_SECRET_FED} 
