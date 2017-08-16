@@ -1,53 +1,67 @@
-oauth-primary:
-  image: upmcenterprises/wso2-is:5.3.0.4
-  ports:
-    - "9446:9446"
-  environment:
-    - USER=regadmin
-    - PASSWORD=regadmin
-    - PUBLICURL=localhost
-    - SERVER=oauthdb-primary
-    - DATABASENAME=regdb
-    - HTTPSPORT=9446
-    - PORT=3307    
-  links:
-    - "oauthdb-primary"
-  volumes:
-    - ./wso2/migrations:/opt/tmp
-oauthdb-primary:
-  image: mysql:5.7
-  environment:
-    - MYSQL_ROOT_PASSWORD=wso21234
-    - MYSQL_DATABASE=regdb
-    - MYSQL_USER=regadmin
-    - MYSQL_PASSWORD=regadmin
-  volumes:
-    - ./wso2/db/first:/var/lib/mysql    
-  ports:
-    - "3307:3306"
-oauth-secondary:
-  image: upmcenterprises/wso2-is:5.3.0.4
-  ports:
-    - "9443:9443"
-  environment:
-    - USER=regadmin
-    - PASSWORD=regadmin
-    - PUBLICURL=localhost
-    - SERVER=oauthdb-secondary
-    - DATABASENAME=regdb
-    - HTTPSPORT=9443
-  links:
-    - "oauthdb-secondary"
-  volumes:
-    - ./wso2/migrations:/opt/tmp
-oauthdb-secondary:
-  image: mysql:5.7
-  environment:
-    - MYSQL_ROOT_PASSWORD=wso21234
-    - MYSQL_DATABASE=regdb
-    - MYSQL_USER=regadmin
-    - MYSQL_PASSWORD=regadmin
-  volumes:
-    - ./wso2/db/second:/var/lib/mysql
-  ports:
-    - "3306:3306"    
+version: '2'
+services:
+  oauth-primary:
+    image: upmcenterprises/wso2-is:5.3.0.4
+    ports:
+      - "9446:9446"
+    env_file:
+      - .env
+    environment:
+      - USER=${WSO2_MYSQL_USER}
+      - PASSWORD=${WSO2_MYSQL_PASSWORD}
+      - PUBLICURL=localhost
+      - SERVER=oauthdb-primary
+      - DATABASENAME=${WSO2_MYSQL_DB}
+      - HTTPSPORT=9446
+      - PORT=${LOCAL_MYSQL_PORT_PRIMARY}    
+    links:
+      - "oauthdb-primary"
+    volumes:
+      - ./wso2/migrations:/opt/tmp
+  oauthdb-primary:
+    image: mysql:5.7
+    env_file:
+      - .env
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${WSO2_MYSQL_DB}
+      - MYSQL_USER=${WSO2_MYSQL_USER}
+      - MYSQL_PASSWORD=${WSO2_MYSQL_PASSWORD}
+    volumes:
+      - primary-mysql-data:/var/lib/mysql    
+    ports:
+      - "${LOCAL_MYSQL_PORT_PRIMARY}:3306"
+  oauth-secondary:
+    image: upmcenterprises/wso2-is:5.3.0.4
+    ports:
+      - "9443:9443"
+    env_file:
+      - .env
+    environment:
+      - USER=${WSO2_MYSQL_USER}
+      - PASSWORD=${WSO2_MYSQL_PASSWORD}
+      - PUBLICURL=localhost
+      - SERVER=oauthdb-secondary
+      - DATABASENAME=${WSO2_MYSQL_DB}
+      - HTTPSPORT=9443
+      - PORT=${LOCAL_MYSQL_PORT_SECONDARY}
+    links:
+      - "oauthdb-secondary"
+    volumes:
+      - ./wso2/migrations:/opt/tmp
+  oauthdb-secondary:
+    image: mysql:5.7
+    env_file:
+      - .env
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${WSO2_MYSQL_DB}
+      - MYSQL_USER=${WSO2_MYSQL_USER}
+      - MYSQL_PASSWORD=${WSO2_MYSQL_PASSWORD}
+    volumes:
+      - secondary-mysql-data:/var/lib/mysql
+    ports:
+      - "${LOCAL_MYSQL_PORT_SECONDARY}:3306"    
+volumes:
+  primary-mysql-data:
+  secondary-mysql-data:
