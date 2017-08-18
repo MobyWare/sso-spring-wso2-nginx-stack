@@ -1,3 +1,4 @@
+require('dotenv').config({ path: '../.env' })
 var express = require('express'),
     expressLayouts = require("express-ejs-layouts"),
     passport = require('passport'),

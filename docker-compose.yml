@@ -1,5 +1,15 @@
 version: '2'
 services:
+  nodeauth-client:
+    build: nodeauth/.
+    ports:
+      - "${WSO2_NODE_CLIENT_PORT}:${WSO2_NODE_CLIENT_PORT}"
+    env_file:
+      - .env  
+    links:
+      - "oauthdb-primary"
+    volumes:
+      - ./.env:/usr/nodeAuth/.env    
   oauth-primary:
     image: upmcenterprises/wso2-is:5.3.0.4
     ports:
@@ -17,9 +27,17 @@ services:
     links:
       - "oauthdb-primary"
     volumes:
-      - ./wso2/migrations:/opt/tmp
+      - ./wso2/migrations/v1-init.sql:/opt/tmp/v1-init.sql
+      - ./wso2/migrations/v2-insert-jwt-claims.sql:/opt/tmp/v2-insert-jwt-claims.sql
+      - ./wso2/migrations/v3-insert-seed-users.sql:/opt/tmp/v3-insert-seed-users.sql
+      - ./wso2/migrations/v4-insert-seed-service-providers.sql:/opt/tmp/v4-insert-seed-service-providers.sql
+      - ./wso2/migrations/v5-primary-insert-seed-users.sql:/opt/tmp/v5-primary-insert-seed-users.sql
+      - ./wso2/migrations/v6-primary-seed-fed-service-provider.sql:/opt/tmp/v6-primary-seed-fed-service-provider.sql
+      - ./wso2/migrations/v7-primary-seed-fed-id-providers.sql:/opt/tmp/v7-primary-seed-fed-id-providers.sql
   oauthdb-primary:
     image: mysql:5.7
+    ports:
+      - "${LOCAL_MYSQL_PORT_PRIMARY}:3306"
     env_file:
       - .env
     environment:
@@ -28,9 +46,7 @@ services:
       - MYSQL_USER=${WSO2_MYSQL_USER}
       - MYSQL_PASSWORD=${WSO2_MYSQL_PASSWORD}
     volumes:
-      - primary-mysql-data:/var/lib/mysql    
-    ports:
-      - "${LOCAL_MYSQL_PORT_PRIMARY}:3306"
+      - primary-mysql-data:/var/lib/mysql
   oauth-secondary:
     image: upmcenterprises/wso2-is:5.3.0.4
     ports:
@@ -48,9 +64,16 @@ services:
     links:
       - "oauthdb-secondary"
     volumes:
-      - ./wso2/migrations:/opt/tmp
+      - ./wso2/migrations/v1-init.sql:/opt/tmp/v1-init.sql
+      - ./wso2/migrations/v2-insert-jwt-claims.sql:/opt/tmp/v2-insert-jwt-claims.sql
+      - ./wso2/migrations/v3-insert-seed-users.sql:/opt/tmp/v3-insert-seed-users.sql
+      - ./wso2/migrations/v4-insert-seed-service-providers.sql:/opt/tmp/v4-insert-seed-service-providers.sql
+      - ./wso2/migrations/v5-secondary-insert-seed-users.sql:/opt/tmp/v5-secondary-insert-seed-users.sql
+      - ./wso2/migrations/v6-secondary-seed-primary-fed-service-provider.sql:/opt/tmp/v6-secondary-seed-primary-fed-service-provider.sql
   oauthdb-secondary:
     image: mysql:5.7
+    ports:
+      - "${LOCAL_MYSQL_PORT_SECONDARY}:3306" 
     env_file:
       - .env
     environment:
@@ -59,9 +82,7 @@ services:
       - MYSQL_USER=${WSO2_MYSQL_USER}
       - MYSQL_PASSWORD=${WSO2_MYSQL_PASSWORD}
     volumes:
-      - secondary-mysql-data:/var/lib/mysql
-    ports:
-      - "${LOCAL_MYSQL_PORT_SECONDARY}:3306"    
+      - secondary-mysql-data:/var/lib/mysql       
 volumes:
   primary-mysql-data:
   secondary-mysql-data:

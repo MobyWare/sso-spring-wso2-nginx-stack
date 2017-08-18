@@ -10,6 +10,5 @@ COPY ./jsconfig.json /usr/nodeAuth/jsconfig.json
 
 RUN npm install
 
-ENV WSO2_NODE_CLIENT_PORT=4006
 EXPOSE 4006
-CMD [ "node", "/usr/nodeAuth/app/app.js" ]
+CMD [ "node", "./app/app.js" ]
